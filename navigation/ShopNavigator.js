@@ -4,21 +4,29 @@ import { createStackNavigator } from 'react-navigation-stack';
 // import { createDrawerNavigator } from 'react-navigation-drawer';
 // import { Text, Platform } from 'react-native';
 // import { Ionicons } from '@expo/vector-icons';
-// import React from 'react';
-// import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
+// import React from 'react'; 
+// import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs' 
 import { Platform } from 'react-native';
 
 import ProductsOverviewScreen from '../screens/shop/ProductsOverviewScreen';
+import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
 import Colors from '../constants/Colors';
 
 const ProductsNavigator = createStackNavigator({
-    ProductsOverview: ProductsOverviewScreen
+    ProductsOverview: ProductsOverviewScreen,
+    ProductDetail: ProductDetailScreen
 }, {
     defaultNavigationOptions: {
         headerStyle: {
-            backgroundColor: Platform === 'android' ? Colors.primary : '',
+            backgroundColor: Platform.OS === 'android' ? Colors.primary : '',
         },
-        headerTitntColor: Platform === 'android' ? 'white' : Colors.primary
+        headerTitleStyle: {
+            fontFamily: 'open-sans-bold'
+        },
+        headerBackTitleStyle: {
+            fontFamily: 'open-sans',
+        },
+        headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary
     }
 });
 
