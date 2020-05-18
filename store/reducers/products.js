@@ -8,11 +8,19 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case productActions.DELETE_PRODUCT:
+        case productActions.CREATE_PRODUCT:
+            const newProduct = new Product(
+                new Date().toString(),
+                'u1',
+                action.productData.title,
+                action.productData.imageUrl,
+                action.productData.description,
+                action.productData.price
+            );
             return {
                 ...state,
-                userProducts: state.userProducts.filter(product => product.id !== action.pid),
-                availableProducts: state.availableProducts.filter(product => product.id !== action.pid)
+                availableProducts: state.availableProducts.concat(newProduct),
+                userProducts: state.userProducts.concat(newProduct)
             };
         case productActions.UPDATE_PRODUCT:
             const productIndex = state.userProducts.findIndex(
