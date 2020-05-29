@@ -1,5 +1,6 @@
 import PRODUCTS from '../../data/dummy-data';
 import * as productActions from '../actions/products';
+import Product from '../../models/product';
 
 const initialState = {
     availableProducts: PRODUCTS,
