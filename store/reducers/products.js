@@ -9,9 +9,14 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
+        case productActions.SET_PRODUCTS:
+            return {
+                availableProducts: action.products,
+                userProducts: action.products.filter(prod => prod.ownerId === 'u1')
+            };
         case productActions.CREATE_PRODUCT:
             const newProduct = new Product(
-                new Date().toString(),
+                action.productData.id,
                 'u1',
                 action.productData.title,
                 action.productData.imageUrl,
