@@ -6,15 +6,15 @@ import {
     Button,
     Platform,
     ActivityIndicator,
-    StyleSheet,
+    StyleSheet
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
+import HeaderButton from '../../components/UI/HeaderButton';
 import ProductItem from '../../components/shop/ProductItem';
 import * as cartActions from '../../store/actions/cart';
 import * as productsActions from '../../store/actions/products';
-import HeaderButton from '../../components/UI/HeaderButton';
 import Colors from '../../constants/Colors';
 
 const ProductsOverviewScreen = props => {
@@ -89,33 +89,31 @@ const ProductsOverviewScreen = props => {
         <FlatList
             data={products}
             keyExtractor={item => item.id}
-            renderItem={itemData => {
-                return (
-                    <ProductItem
-                        image={itemData.item.imageUrl}
-                        title={itemData.item.title}
-                        price={itemData.item.price}
-                        onSelect={() => {
+            renderItem={itemData => (
+                <ProductItem
+                    image={itemData.item.imageUrl}
+                    title={itemData.item.title}
+                    price={itemData.item.price}
+                    onSelect={() => {
+                        selectItemHandler(itemData.item.id, itemData.item.title);
+                    }}
+                >
+                    <Button
+                        color={Colors.primary}
+                        title="View Details"
+                        onPress={() => {
                             selectItemHandler(itemData.item.id, itemData.item.title);
                         }}
-                    >
-                        <Button
-                            color={Colors.primary}
-                            title="View Details"
-                            onPress={() => {
-                                selectItemHandler(itemData.item.id, itemData.item.title);
-                            }}
-                        />
-                        <Button
-                            color={Colors.primary}
-                            title="To Cart"
-                            onPress={() => {
-                                dispatch(cartActions.addToCart(itemData.item));
-                            }}
-                        />
-                    </ProductItem>
-                );
-            }}
+                    />
+                    <Button
+                        color={Colors.primary}
+                        title="To Cart"
+                        onPress={() => {
+                            dispatch(cartActions.addToCart(itemData.item));
+                        }}
+                    />
+                </ProductItem>
+            )}
         />
     );
 };
@@ -123,7 +121,7 @@ const ProductsOverviewScreen = props => {
 ProductsOverviewScreen.navigationOptions = navData => {
     return {
         headerTitle: 'All Products',
-        headerLeft: () => (
+        headerLeft: (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item
                     title="Menu"
@@ -148,6 +146,8 @@ ProductsOverviewScreen.navigationOptions = navData => {
     };
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    centered: { flex: 1, justifyContent: 'center', alignItems: 'center' }
+});
 
 export default ProductsOverviewScreen;
