@@ -82,10 +82,11 @@ const AuthScreen = props => {
     setIsLoading(true);
     try {
       await dispatch(action);
+      props.navigation.navigate('Shop');
     } catch (err) {
       setError(err.message);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const inputChangeHandler = useCallback(
@@ -136,12 +137,12 @@ const AuthScreen = props => {
               {isLoading ? (
                 <ActivityIndicator size="small" color={Colors.primary} />
               ) : (
-                <Button
-                  title={isSignup ? 'Sign Up' : 'Login'}
-                  color={Colors.primary}
-                  onPress={authHandler}
-                />
-              )}
+                  <Button
+                    title={isSignup ? 'Sign Up' : 'Login'}
+                    color={Colors.primary}
+                    onPress={authHandler}
+                  />
+                )}
             </View>
             <View style={styles.buttonContainer}>
               <Button

@@ -1,23 +1,28 @@
 import PRODUCTS from '../../data/dummy-data';
-import * as productActions from '../actions/products';
+import {
+    DELETE_PRODUCT,
+    CREATE_PRODUCT,
+    UPDATE_PRODUCT,
+    SET_PRODUCTS
+} from '../actions/products';
 import Product from '../../models/product';
 
 const initialState = {
-    availableProducts: PRODUCTS,
-    userProducts: PRODUCTS.filter(prod => prod.ownerId === 'u1')
+    availableProducts: [],
+    userProducts: []
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case productActions.SET_PRODUCTS:
+        case SET_PRODUCTS:
             return {
                 availableProducts: action.products,
-                userProducts: action.products.filter(prod => prod.ownerId === 'u1')
+                userProducts: action.userProducts
             };
-        case productActions.CREATE_PRODUCT:
+        case CREATE_PRODUCT:
             const newProduct = new Product(
                 action.productData.id,
-                'u1',
+                action.productData.ownerId,
                 action.productData.title,
                 action.productData.imageUrl,
                 action.productData.description,
@@ -28,7 +33,7 @@ export default (state = initialState, action) => {
                 availableProducts: state.availableProducts.concat(newProduct),
                 userProducts: state.userProducts.concat(newProduct)
             };
-        case productActions.UPDATE_PRODUCT:
+        case UPDATE_PRODUCT:
             const productIndex = state.userProducts.findIndex(
                 prod => prod.id === action.pid
             );
@@ -52,7 +57,7 @@ export default (state = initialState, action) => {
                 availableProducts: updatedAvailableProducts,
                 userProducts: updatedUserProducts
             };
-        case productActions.DELETE_PRODUCT:
+        case DELETE_PRODUCT:
             return {
                 ...state,
                 userProducts: state.userProducts.filter(
@@ -62,7 +67,6 @@ export default (state = initialState, action) => {
                     product => product.id !== action.pid
                 )
             };
-        default:
-            return state;
     }
+    return state;
 };
